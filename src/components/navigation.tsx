@@ -2,16 +2,16 @@
 
 import Button from "./ui/button"
 import { LogIn } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { cn } from "@/utils/cn"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { UserButton, useAuth } from "@clerk/nextjs"
 
 const tabs = [
-  { label: "Home", id: 0 },
-  { label: "Boards", id: 1 },
+  { label: "Home", id: 0, path: "/" },
+  { label: "Boards", id: 1, path: "/boards" },
 ]
 
 function Navigation() {
@@ -19,6 +19,13 @@ function Navigation() {
   const { push } = useRouter()
 
   const { isSignedIn } = useAuth()
+  const pathname = usePathname()
+
+  useEffect(() => {
+    tabs.forEach(({ path, id }) => {
+      if (path === pathname) setActiveTab(id)
+    })
+  }, [pathname])
 
   return (
     <header className='flex container mx-auto max-w-5xl justify-between py-6 items-center'>
@@ -33,7 +40,10 @@ function Navigation() {
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
+            onClick={() => {
+              setActiveTab(tab.id)
+              push(tab.path)
+            }}
             className={cn(
               activeTab === tab.id ? "text-white" : "text-primary",
               "relative rounded-full px-4 py-2 font-bold outline-2 outline-sky-400 focus-visible:outline transition-colors"
