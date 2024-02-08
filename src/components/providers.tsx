@@ -10,7 +10,9 @@ function Providers({ children }: { children: React.ReactNode }) {
         baseTheme: shadesOfPurple,
         variables: {
           colorPrimary: "#DFCFFC",
-          colorBackground: '#6944E9'
+          colorBackground: "#6944E9",
+          colorInputText: "#000",
+          colorInputBackground: "#fff",
         },
       }}
     >
