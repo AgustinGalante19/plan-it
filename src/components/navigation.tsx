@@ -23,7 +23,7 @@ function Navigation() {
 
   useEffect(() => {
     tabs.forEach(({ path, id }) => {
-      if (path === pathname) setActiveTab(id)
+      if (pathname.includes(path)) setActiveTab(id)
     })
   }, [pathname])
 
