@@ -4,7 +4,7 @@ import { cn } from "@/utils/cn"
 import { Loader2 } from "lucide-react"
 
 const buttonVariants = cva(
-  "rounded flex items-center justify-center transition-colors gap-2 hover:bg-opacity-90 disabled:bg-opacity-70",
+  "rounded flex items-center justify-center transition-colors hover:bg-opacity-90 disabled:bg-opacity-70 font-semibold",
   {
     variants: {
       variant: {
