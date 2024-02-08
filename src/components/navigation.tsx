@@ -6,6 +6,8 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { cn } from "@/utils/cn"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { UserButton, useAuth } from "@clerk/nextjs"
 
 const tabs = [
   { label: "Home", id: 0 },
@@ -14,6 +16,9 @@ const tabs = [
 
 function Navigation() {
   const [activeTab, setActiveTab] = useState(tabs[0].id)
+  const { push } = useRouter()
+
+  const { isSignedIn } = useAuth()
 
   return (
     <header className='flex container mx-auto max-w-5xl justify-between py-6 items-center'>
@@ -46,10 +51,14 @@ function Navigation() {
         ))}
       </div>
       <div>
-        <Button>
-          Login
-          <LogIn size={16} className='ml-2' />
-        </Button>
+        {!isSignedIn ? (
+          <Button onClick={() => push("/sign-in")}>
+            Login
+            <LogIn size={16} className='ml-2' />
+          </Button>
+        ) : (
+          <UserButton afterSignOutUrl='/' />
+        )}
       </div>
     </header>
   )

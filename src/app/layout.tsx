@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import Navigation from "@/components/navigation"
 import ThemeSwitcher from "@/components/theme-switcher"
+import Providers from "@/components/providers"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -17,16 +18,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en'>
-      <body className={inter.className}>
-        <div className='flex flex-col min-h-screen dark:bg-dark-blue dark:text-white relative'>
-          <div className='flex-1'>
-            <Navigation />
-            {children}
+    <Providers>
+      <html lang='en'>
+        <body className={inter.className}>
+          <div className='flex flex-col min-h-screen dark:bg-dark-blue dark:text-white relative'>
+            <div className='flex-1'>
+              <Navigation />
+              {children}
+            </div>
+            <ThemeSwitcher />
           </div>
-          <ThemeSwitcher />
-        </div>
-      </body>
-    </html>
+        </body>
+      </html>
+    </Providers>
   )
 }
