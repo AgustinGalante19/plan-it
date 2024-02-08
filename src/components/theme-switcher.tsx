@@ -5,27 +5,23 @@ import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 
 function ThemeSwitcher() {
-  const [currentTheme, setCurrentTheme] = useState<"dark" | "light">(
-    window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-  )
+  const [currentTheme, setCurrentTheme] = useState<"dark" | "light">("light")
 
   useEffect(() => {
     const configTheme = () => {
       if (
-        localStorage.theme === "dark" ||
+        globalThis.localStorage.getItem("theme") === "dark" ||
         (!("theme" in localStorage) &&
           window.matchMedia("(prefers-color-scheme: dark)").matches)
       ) {
         document.documentElement.classList.add("dark")
+        globalThis.localStorage.setItem("theme", "dark")
+        setCurrentTheme("dark")
       } else {
         document.documentElement.classList.remove("dark")
+        globalThis.localStorage.setItem("theme", "light")
+        setCurrentTheme("light")
       }
-
-      /*       localStorage.theme = "light"
-
-      localStorage.theme = "dark"
-
-      localStorage.removeItem("theme") */
     }
     configTheme()
   }, [])
@@ -41,8 +37,10 @@ function ThemeSwitcher() {
         document.documentElement.classList.toggle("dark")
         if (currentTheme === "dark") {
           setCurrentTheme("light")
+          globalThis.localStorage.setItem("theme", "light")
         } else {
           setCurrentTheme("dark")
+          globalThis.localStorage.setItem("theme", "dark")
         }
       }}
     >

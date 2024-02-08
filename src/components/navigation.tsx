@@ -1,12 +1,11 @@
 "use client"
 
-import Image from "next/image"
-import blueprint from "@/assets/blueprint.png"
 import Button from "./ui/button"
 import { LogIn } from "lucide-react"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { cn } from "@/utils/cn"
+import Link from "next/link"
 
 const tabs = [
   { label: "Home", id: 0 },
@@ -19,10 +18,11 @@ function Navigation() {
   return (
     <header className='flex container mx-auto max-w-5xl justify-between py-6 items-center'>
       <div className='flex items-center'>
-        <Image width={30} height={30} alt='blueprint' src={blueprint} />
-        <span className='text-2xl font-bold'>
-          Plan-<span className='text-primary'>It</span>
-        </span>
+        <Link href='/'>
+          <span className='text-2xl font-bold'>
+            Plan <span className='text-primary'>It</span>
+          </span>
+        </Link>
       </div>
       <div className='flex space-x-1'>
         {tabs.map((tab) => (
@@ -47,7 +47,8 @@ function Navigation() {
       </div>
       <div>
         <Button>
-          <LogIn size={16} /> Login
+          Login
+          <LogIn size={16} className='ml-2' />
         </Button>
       </div>
     </header>
