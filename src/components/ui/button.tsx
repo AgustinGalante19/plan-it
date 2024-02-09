@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react"
 import { VariantProps, cva } from "class-variance-authority"
-import { cn } from "@/utils/cn"
+import { cn } from "@/lib/utils"
 import { Loader2 } from "lucide-react"
 
 const buttonVariants = cva(
@@ -11,6 +11,7 @@ const buttonVariants = cva(
         default: "bg-primary text-white",
         outline:
           "bg-secondary text-primary border border-primary border-opacity-50",
+        rounded: "rounded-full bg-primary text-white",
       },
       size: {
         small: "text-sm px-2 py-1",
