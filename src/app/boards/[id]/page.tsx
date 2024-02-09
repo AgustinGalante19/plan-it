@@ -5,6 +5,8 @@ import Item from "./_components/item"
 import Column from "./_components/column"
 
 const initialData = {
+  boardName: "My first Board",
+  description: "This is an description from my first board",
   columns: [
     {
       id: 1,
@@ -32,28 +34,36 @@ const initialData = {
     },
   ],
 
-  columnOrder: [1],
+  columnOrder: [1,2],
 }
 
 function Board() {
   const onDragEnd = (result: DropResult) => {}
 
   return (
-    <div className='bg-neutral-500 flex container mx-auto gap-x-4 p-8'>
-      <DragDropContext onDragEnd={onDragEnd}>
-        {initialData.columns.map((column) => (
-          <Droppable droppableId={column.id.toString()} key={column.id}>
-            {(provided) => (
-              <Column provided={provided} column={column}>
-                {column.tasks.map((task, index) => (
-                  <Item index={index} task={task} key={task.id} />
-                ))}
-                {provided.placeholder}
-              </Column>
-            )}
-          </Droppable>
-        ))}
-      </DragDropContext>
+    <div>
+      <div className='bg-primary bg-opacity-10'>
+        <div className='container mx-auto flex flex-col p-4'>
+          <h2 className='text-xl font-semibold'>{initialData.boardName}</h2>
+          <p className='text-sm'>{initialData.description}</p>
+        </div>
+      </div>
+      <div className='flex overflow-auto  h-[650px] gap-4 p-8 mt-4'>
+        <DragDropContext onDragEnd={onDragEnd}>
+          {initialData.columns.map((column) => (
+            <Droppable droppableId={column.id.toString()} key={column.id}>
+              {(provided) => (
+                <Column provided={provided} column={column}>
+                  {column.tasks.map((task, index) => (
+                    <Item index={index} task={task} key={task.id} />
+                  ))}
+                  {provided.placeholder}
+                </Column>
+              )}
+            </Droppable>
+          ))}
+        </DragDropContext>
+      </div>
     </div>
   )
 }

@@ -12,15 +12,15 @@ function Item({ task, index }: Props) {
     <Draggable draggableId={task.id.toString()} index={index}>
       {(provided) => (
         <div
-          className='bg-white flex flex-col my-2 p-1.5'
+          className='bg-secondary/30 text-white rounded-md flex flex-col my-2 p-1.5'
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <div className='bg-green-400'>
-            <h5 className='text-xl font-semibold text-black'>{task.title}</h5>
+          <div className='p-1'>
+            <h5 className='text-xl font-semibold'>{task.title}</h5>
           </div>
-          <div className='bg-blue-400'>
+          <div className='p-1'>
             <p>{task.content}</p>
           </div>
         </div>
