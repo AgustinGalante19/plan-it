@@ -25,11 +25,11 @@ export default function Home() {
             </span>
           </div>
           <div className='relative flex'>
-            <div className='absolute h-[400px] w-[400px] rounded-full bg-primary blur-xl left-5 bottom-1 bg-opacity-20 dark:bg-opacity-50' />
+            <div className='absolute h-[400px] w-[400px] rounded-full bg-primary blur-2xl left-5 bottom-1 bg-opacity-20 dark:bg-opacity-30' />
             <Image
               src={trelloCollage}
               alt='some collage from trello'
-              className='z-20'
+              className='z-10 drop-shadow-2xl'
             />
           </div>
         </motion.div>
