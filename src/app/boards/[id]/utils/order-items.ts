@@ -1,11 +1,11 @@
-import { Item } from "../types/drag-list"
+import { Item } from "@prisma/client"
 
 export default function orderItems(
   items: Item[],
-  id: number,
+  id: string,
   newPosition: number
 ) {
-  const source = items.find((tarea) => tarea.id === id)
+  const source = items.find((item) => item.id === id)
   if (!source || newPosition < 0 || newPosition >= items.length) {
     return items
   }

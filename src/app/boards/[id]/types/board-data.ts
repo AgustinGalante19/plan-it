@@ -1,7 +1,9 @@
-import { Column } from "./drag-list"
+import { Board, Column, Item } from "@prisma/client"
 
-export default interface BoardData {
-  boardName: string
-  description: string
-  columns: Column[]
+export interface ColWithItems extends Column {
+  items: Item[]
+}
+
+export default interface BoardData extends Board {
+  columns: ColWithItems[]
 }

@@ -1,5 +1,5 @@
 import { DropResult } from "@hello-pangea/dnd"
-import BoardData from "../types/board-data"
+import BoardData, { ColWithItems } from "../types/board-data"
 import { Column } from "../types/drag-list"
 import orderItems from "./order-items"
 
@@ -21,17 +21,13 @@ export default function orderBoard(
 
   if (!currentColumn) return boardData
 
-  const updatedColumn: Column = {
+  const updatedColumn: ColWithItems = {
     ...currentColumn,
-    tasks: orderItems(
-      currentColumn.tasks,
-      Number(draggableId),
-      destination.index
-    ),
+    items: orderItems(currentColumn.items, draggableId, destination.index),
   }
 
   const updatedResult = boardData.columns.map((e) => {
-    if (e.id === Number(source.droppableId)) {
+    if (e.id === source.droppableId) {
       return updatedColumn
     }
     return e

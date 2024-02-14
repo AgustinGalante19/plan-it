@@ -1,15 +1,15 @@
 import { Draggable } from "@hello-pangea/dnd"
+import { Item } from "@prisma/client"
 import React from "react"
-import { Item } from "../types/drag-list"
 
 interface Props {
-  task: Item
+  item: Item
   index: number
 }
 
-function Item({ task, index }: Props) {
+function Item({ item, index }: Props) {
   return (
-    <Draggable draggableId={task.id.toString()} index={index}>
+    <Draggable draggableId={item.id.toString()} index={index}>
       {(provided) => (
         <div
           className='dark:bg-secondary/30 bg-primary/80 text-white rounded-md flex flex-col my-2 p-1.5'
@@ -18,10 +18,10 @@ function Item({ task, index }: Props) {
           ref={provided.innerRef}
         >
           <div className='p-1'>
-            <h5 className='text-xl font-semibold'>{task.title}</h5>
+            <h5 className='text-xl font-semibold'>{item.title}</h5>
           </div>
           <div className='p-1'>
-            <p>{task.content}</p>
+            <p>{item.description}</p>
           </div>
         </div>
       )}
