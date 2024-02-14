@@ -73,7 +73,7 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
                 <Item index={index} item={item} key={item.id} />
               ))}
               <button
-                className='dark:bg-secondary/15 bg-primary/60 text-white rounded-md flex justify-center items-center p-1 w-full'
+                className='dark:bg-secondary/20 bg-primary/60 text-white rounded-md flex justify-center items-center p-1 w-full'
                 type='button'
                 onClick={() => handleAddItem(column)}
               >
@@ -86,7 +86,7 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
         </Droppable>
       ))}
       <button
-        className='bg-primary/60 text-white font-semibold rounded-md min-w-96 h-10 flex px-4 items-center justify-center'
+        className='bg-primary/60 text-white font-semibold rounded-md w-96 h-10 flex px-4 items-center justify-center'
         type='button'
         onClick={handleAddColumn}
       >
