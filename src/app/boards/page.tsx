@@ -5,6 +5,7 @@ import { ButtonTooltip } from "@/components/ui/tooltip"
 import { Plus } from "lucide-react"
 import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
+import BoardItem from "./_components/board-item"
 const userBordas = [
   {
     id: 1,
@@ -37,17 +38,7 @@ function Boards() {
       </div>
       <div className='flex flex-wrap gap-4 py-8'>
         {userBordas.map(({ title, description, id }) => (
-          <motion.button
-            key={id}
-            className='bg-primary text-white w-96 h-32 p-4 rounded-md flex flex-col dark:hover:bg-primary/55 hover:bg-primary/80 transition-colors'
-            onClick={() => push(`boards/${id}`)}
-            whileHover={{
-              scale: 1.05,
-            }}
-          >
-            <h5 className='text-lg font-semibold'>{title}</h5>
-            <p>{description}</p>
-          </motion.button>
+          <BoardItem title={title} description={description} id={id} key={id} />
         ))}
       </div>
     </motion.div>
@@ -55,3 +46,14 @@ function Boards() {
 }
 
 export default Boards
+
+{
+  /* <motion.button
+  key={id}
+  className='bg-primary text-white w-96 h-32 p-4 rounded-md flex flex-col transition-colors relative overflow-hidden'
+  onClick={() => push(`boards/${id}`)}
+>
+  <h5 className='text-lg font-semibold'>{title}</h5>
+  <p>{description}</p>
+</motion.button> */
+}
