@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import { Loader2 } from "lucide-react"
 
 const buttonVariants = cva(
-  "rounded flex items-center justify-center transition-colors hover:bg-opacity-90 disabled:bg-opacity-70 font-semibold",
+  "rounded flex items-center justify-center transition-colors hover:bg-opacity-90 disabled:bg-opacity-70",
   {
     variants: {
       variant: {
@@ -46,7 +46,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
       disabled={disabled || isLoading}
     >
       {children}
-      {isLoading && <Loader2 className='animate-spin' size={16} />}
+      {isLoading && <Loader2 className='animate-spin ml-2' size={16} />}
     </button>
   )
 })
