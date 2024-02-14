@@ -6,11 +6,10 @@ export interface List {
 export interface Column {
   id: number
   colName: string
-  taskIds: number[]
-  tasks: Task[]
+  tasks: Item[]
 }
 
-export interface Task {
+export interface Item {
   id: number
   title: string
   content: string

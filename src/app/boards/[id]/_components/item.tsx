@@ -12,7 +12,7 @@ function Item({ task, index }: Props) {
     <Draggable draggableId={task.id.toString()} index={index}>
       {(provided) => (
         <div
-          className='bg-secondary/30 text-white rounded-md flex flex-col my-2 p-1.5'
+          className='dark:bg-secondary/30 bg-primary/80 text-white rounded-md flex flex-col my-2 p-1.5'
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
