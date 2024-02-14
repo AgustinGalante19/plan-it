@@ -9,7 +9,7 @@ interface Props {
 
 function Column({ children, provided, column }: Props) {
   return (
-    <div className='p-4 bg-secondary dark:bg-primary rounded-md min-w-96 space-y-2 flex-col'>
+    <div className='p-4 bg-secondary dark:bg-primary rounded-md min-w-96 space-y-2 flex-col overflow-y-auto'>
       <h4 className='dark:text-white font-bold text-xl'>{column.colName}</h4>
       <div ref={provided.innerRef} {...provided.droppableProps}>
         {children}

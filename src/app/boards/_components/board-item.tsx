@@ -8,8 +8,8 @@ const BoardItem = ({
   id,
 }: {
   title: string
-  description: string
-  id: number
+  description: string | null
+  id: string
 }) => {
   const divRef = useRef<HTMLDivElement>(null)
   const [isFocused, setIsFocused] = useState(false)
