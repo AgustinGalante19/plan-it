@@ -1,9 +1,9 @@
 import { Draggable } from "@hello-pangea/dnd"
 import React from "react"
-import { Task } from "../types/drag-list"
+import { Item } from "../types/drag-list"
 
 interface Props {
-  task: Task
+  task: Item
   index: number
 }
 
