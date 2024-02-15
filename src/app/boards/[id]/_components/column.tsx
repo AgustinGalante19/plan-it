@@ -57,18 +57,15 @@ function Column({ children, provided, column, columns, updateCols }: Props) {
               className='py-1 px-1.5 rounded-lg'
               onClick={() => setIsEditing(true)}
             >
-              <Pencil size={18} />
+              <Pencil size={22} />
             </button>
           ) : (
             <button>
-              <Check size={18} onClick={handleUpdateTitle} />
+              <Check onClick={handleUpdateTitle} color='rgb(22 163 74)' />
             </button>
           )}
-          <button
-            className='py-1 px-1.5 rounded-lg bg-red-500 hover:bg-red-500/70 transition-colors'
-            onClick={handleRemoveCol}
-          >
-            <Trash size={18} />
+          <button className='py-1 px-1.5 rounded-lg' onClick={handleRemoveCol}>
+            <Trash color='rgb(239 68 68)' />
           </button>
         </div>
       </div>
