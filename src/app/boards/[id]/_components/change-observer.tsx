@@ -17,7 +17,6 @@ function ChangeObserver({ initialState }: Props) {
 
   useEffect(() => {
     const listenChanges = () => {
-      console.log({ currentState, boardState })
       if (JSON.stringify(currentState) !== JSON.stringify(boardState)) {
         setHasChanges(true)
       } else {
@@ -27,33 +26,45 @@ function ChangeObserver({ initialState }: Props) {
     listenChanges()
   }, [currentState, boardState])
 
-  const handleSaveChanges = () => {}
+  const handleSaveChanges = () => {
+    // TODO: use server action to save changes
+    setCurrentState(boardState)
+  }
 
   return (
-    hasChanges && (
-      <motion.div
-        initial={{
-          translateY: 400,
-        }}
-        animate={{
-          translateY: 0,
-        }}
-        className='w-full absolute flex flex-col items-center h-auto bg-green-500'
-      >
-        <div className='absolute flex w-[90%] self-center justify-between p-4 rounded-lg mt-4 bg-primary bg-opacity-50 items-center'>
-          <span className='font-semibold'>
-            ❓ Changes have been detected, do yo want to save it?
-          </span>
-          <Button
-            type='button'
-            title='Save changes'
-            onClick={handleSaveChanges}
-          >
-            Save
-          </Button>
-        </div>
-      </motion.div>
-    )
+    <>
+      {hasChanges && (
+        <motion.div
+          initial={{
+            translateY: 400,
+          }}
+          animate={{
+            translateY: 0,
+            transition: {
+              duration: 0.7,
+              bounce: 0.5,
+              type: "spring",
+            },
+          }}
+          className={
+            "w-full absolute flex-col items-center h-auto bg-green-500 flex"
+          }
+        >
+          <div className='absolute flex w-[90%] self-center justify-between p-4 rounded-lg mt-4 bg-primary bg-opacity-50 items-center'>
+            <span className='font-semibold'>
+              ❓ Changes have been detected, do yo want to save it?
+            </span>
+            <Button
+              type='button'
+              title='Save changes'
+              onClick={handleSaveChanges}
+            >
+              Save
+            </Button>
+          </div>
+        </motion.div>
+      )}
+    </>
   )
 }
 
