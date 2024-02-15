@@ -20,6 +20,12 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
     setBoardData(orderResult)
   }
 
+  const updateCols = (newCols: ColWithItems[]) =>
+    setBoardData({
+      ...boardData,
+      columns: newCols,
+    })
+
   const handleAddItem = (column: ColType) => {
     const currentColumn = boardData.columns.find((e) => e.id === column.id)
 
@@ -68,7 +74,12 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
       {boardData.columns.map((column) => (
         <Droppable droppableId={column.id.toString()} key={column.id}>
           {(provided) => (
-            <Column provided={provided} column={column}>
+            <Column
+              provided={provided}
+              column={column}
+              updateCols={updateCols}
+              columns={boardData.columns}
+            >
               {column.items.map((item, index) => (
                 <Item index={index} item={item} key={item.id} />
               ))}
@@ -86,7 +97,7 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
         </Droppable>
       ))}
       <button
-        className='bg-primary/60 text-white font-semibold rounded-md w-96 h-10 flex px-4 items-center justify-center'
+        className='bg-primary/60 text-white font-semibold rounded-md min-w-[24rem] h-10 flex px-4 items-center justify-center'
         type='button'
         onClick={handleAddColumn}
       >

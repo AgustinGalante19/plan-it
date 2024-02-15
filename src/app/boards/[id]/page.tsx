@@ -29,7 +29,7 @@ async function Page({ params }: { params: { id: string } }) {
           </div>
         </div>
       </div>
-      <div className='flex overflow-auto h-[650px] gap-4 p-8 mt-4'>
+      <div className='flex overflow-x-auto h-[650px] gap-4 p-8 mt-4'>
         <Board initialBoardData={boardData} />
       </div>
     </div>
