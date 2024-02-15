@@ -2,17 +2,37 @@ import { Draggable } from "@hello-pangea/dnd"
 import ItemDialog from "./item-dialog"
 import { useState } from "react"
 import { Pencil, Trash } from "lucide-react"
-import { Item } from "../types/board-data"
+import { Column, Item } from "../types/board-data"
+import useBoardStore from "../../store/board-store"
 
 interface Props {
   item: Item
   index: number
+  currentColumn: Column
 }
 
-function Item({ item, index }: Props) {
+function Item({ item, index, currentColumn }: Props) {
   const [isEditOpen, setIsEditOpen] = useState(false)
+  const { boardState, setBoardState } = useBoardStore()
 
   const handleClose = () => setIsEditOpen(false)
+
+  const handleRemoveItem = () => {
+    const newItems = currentColumn.items.filter((e) => e.id !== item.id)
+
+    const resultCols = boardState.columns.map((col: Column) => {
+      if (col.id === currentColumn.id) {
+        return {
+          ...col,
+          items: newItems,
+        }
+      }
+
+      return col
+    })
+
+    setBoardState({ ...boardState, columns: resultCols })
+  }
 
   return (
     <>
@@ -32,7 +52,7 @@ function Item({ item, index }: Props) {
                 </button>
                 <button
                   className='py-1 px-1.5 rounded-lg'
-                  /* onClick={handleRemoveItem} */
+                  onClick={handleRemoveItem}
                 >
                   <Trash size={18} color='rgb(239 68 68)' />
                 </button>
@@ -48,6 +68,7 @@ function Item({ item, index }: Props) {
         isOpen={isEditOpen}
         itemData={item}
         handleClose={handleClose}
+        currentColumn={currentColumn}
       />
     </>
   )

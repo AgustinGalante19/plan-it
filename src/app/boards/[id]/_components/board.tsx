@@ -19,8 +19,6 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
     setBoardState(initialBoardData)
   }, [initialBoardData, setBoardState])
 
-  const [isLoadingCol, setIsLoadingCol] = useState(false)
-
   const onDragEnd = (result: DropResult) => {
     const orderResult = orderBoard(boardState, result)
     setBoardState(orderResult)
@@ -88,7 +86,12 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
               columns={boardState.columns}
             >
               {column.items.map((item, index) => (
-                <Item index={index} item={item} key={item.id} />
+                <Item
+                  currentColumn={column}
+                  index={index}
+                  item={item}
+                  key={item.id}
+                />
               ))}
               <button
                 className='dark:bg-secondary/20 bg-primary/60 text-white rounded-md flex justify-center items-center p-1 w-full'
@@ -108,10 +111,8 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
         type='button'
         onClick={handleAddColumn}
         title='add column'
-        disabled={isLoadingCol}
       >
         <Plus size={18} /> <span>Add column</span>
-        {isLoadingCol && <Loader2 className='ml-2 animate-spin' size={18} />}
       </button>
     </DragDropContext>
   )

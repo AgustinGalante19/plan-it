@@ -19,9 +19,10 @@ interface Props {
   isOpen: boolean
   itemData: Item
   handleClose: () => void
+  currentColumn: Column
 }
 
-function ItemDialog({ isOpen, itemData, handleClose }: Props) {
+function ItemDialog({ isOpen, itemData, handleClose, currentColumn }: Props) {
   const { boardState, setBoardState } = useBoardStore()
   const [formData, setFormData] = useState({
     title: itemData.title,
@@ -30,11 +31,6 @@ function ItemDialog({ isOpen, itemData, handleClose }: Props) {
 
   const handleSaveItem = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    const currentColumn = boardState.columns.find(
-      (col: Column) => col.id === itemData.columnId
-    )
-
-    if (!currentColumn) return
 
     const newItems = currentColumn.items.map((item: Item) => {
       if (item.id === itemData.id) {
@@ -87,6 +83,7 @@ function ItemDialog({ isOpen, itemData, handleClose }: Props) {
             <div>
               <Label>Description</Label>
               <Textarea
+                className='text-white'
                 name='description'
                 value={formData.description ?? ""}
                 onChange={(e) =>
