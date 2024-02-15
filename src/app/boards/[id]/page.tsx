@@ -12,7 +12,7 @@ async function Page({ params }: { params: { id: string } }) {
         <div className=' flex flex-col p-4'>
           <div className='flex'>
             <Link
-              className='flex items-center gap-1 hover:bg-secondary dark:hover:bg-opacity-10 py-1 px-2 rounded-md transition-colors mb-2'
+              className='flex items-center gap-1 hover:bg-secondary dark:hover:bg-opacity-10 py-1 px-2 rounded-md transition-colors'
               href='/boards'
             >
               <ArrowLeft size={18} />
@@ -21,6 +21,11 @@ async function Page({ params }: { params: { id: string } }) {
           </div>
           <div className='px-4'>
             <p className='text-sm'>{boardData.description}</p>
+          </div>
+          <div className='px-4'>
+            <span className='text-xs text-neutral-600 dark:text-neutral-400'>
+              {boardData.createdAt.toDateString()}
+            </span>
           </div>
         </div>
       </div>
