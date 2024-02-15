@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react"
 import Board from "./_components/board"
 import getBoard from "./actions/get-board"
 import Link from "next/link"
+import ChangeObserver from "./_components/change-observer"
 
 async function Page({ params }: { params: { id: string } }) {
   const boardData = await getBoard(params.id)
@@ -32,6 +33,7 @@ async function Page({ params }: { params: { id: string } }) {
       <div className='flex overflow-x-auto h-[650px] gap-4 p-8 mt-4'>
         <Board initialBoardData={boardData} />
       </div>
+      <ChangeObserver initialState={boardData} />
     </div>
   )
 }

@@ -1,44 +1,51 @@
 "use client"
 
 import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Column from "./column"
 import Item from "./item"
 import BoardData, { ColWithItems } from "../types/board-data"
-import { Plus } from "lucide-react"
+import { Loader2, Plus } from "lucide-react"
 import orderBoard from "../utils/order-board"
 import { Column as ColType } from "@prisma/client"
 import ShortUniqueId from "short-unique-id"
+import useBoardStore from "../../store/board-store"
 
 function Board({ initialBoardData }: { initialBoardData: BoardData }) {
   const { randomUUID } = new ShortUniqueId({ length: 10 })
 
-  const [boardData, setBoardData] = useState<BoardData>(initialBoardData)
+  const { boardState, setBoardState } = useBoardStore()
+
+  useEffect(() => {
+    setBoardState(initialBoardData)
+  }, [initialBoardData, setBoardState])
+
+  const [isLoadingCol, setIsLoadingCol] = useState(false)
 
   const onDragEnd = (result: DropResult) => {
-    const orderResult = orderBoard(boardData, result)
-    setBoardData(orderResult)
+    const orderResult = orderBoard(boardState, result)
+    setBoardState(orderResult)
   }
 
   const updateCols = (newCols: ColWithItems[]) =>
-    setBoardData({
-      ...boardData,
+    setBoardState({
+      ...boardState,
       columns: newCols,
     })
 
   const handleAddItem = (column: ColType) => {
-    const currentColumn = boardData.columns.find((e) => e.id === column.id)
+    const currentColumn = boardState.columns.find((e) => e.id === column.id)
 
     if (!currentColumn) return
 
-    const updatedCols: ColWithItems[] = boardData.columns.map((col) => {
+    const updatedCols: ColWithItems[] = boardState.columns.map((col) => {
       if (col.id === currentColumn.id) {
         return {
           ...currentColumn,
           items: [
             ...currentColumn.items,
             {
-              id: randomUUID(), //this is temporal
+              id: randomUUID(),
               title: "new item",
               columnId: currentColumn.id,
               description: "",
@@ -48,21 +55,21 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
       }
       return col
     })
-    setBoardData({
-      ...boardData,
+    setBoardState({
+      ...boardState,
       columns: updatedCols,
     })
   }
 
   const handleAddColumn = () =>
-    setBoardData({
-      ...boardData,
+    setBoardState({
+      ...boardState,
       columns: [
-        ...boardData.columns,
+        ...boardState.columns,
         {
           title: "New column",
           id: randomUUID(),
-          boardId: boardData.id,
+          boardId: boardState.id,
           items: [],
           createdAt: new Date(),
         },
@@ -71,14 +78,14 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      {boardData.columns.map((column) => (
+      {boardState.columns.map((column) => (
         <Droppable droppableId={column.id.toString()} key={column.id}>
           {(provided) => (
             <Column
               provided={provided}
               column={column}
               updateCols={updateCols}
-              columns={boardData.columns}
+              columns={boardState.columns}
             >
               {column.items.map((item, index) => (
                 <Item index={index} item={item} key={item.id} />
@@ -97,11 +104,14 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
         </Droppable>
       ))}
       <button
-        className='bg-primary/60 text-white font-semibold rounded-md min-w-[24rem] h-10 flex px-4 items-center justify-center'
+        className='bg-primary/60 text-white font-semibold rounded-md min-w-[24rem] h-10 flex px-4 items-center justify-center disabled:bg-primary/20'
         type='button'
         onClick={handleAddColumn}
+        title='add column'
+        disabled={isLoadingCol}
       >
         <Plus size={18} /> <span>Add column</span>
+        {isLoadingCol && <Loader2 className='ml-2 animate-spin' size={18} />}
       </button>
     </DragDropContext>
   )
