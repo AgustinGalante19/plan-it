@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import BoardData from "../types/board-data"
 import useBoardStore from "../../store/board-store"
+import saveBoard from "../actions/save-board"
 
 interface Props {
   initialState: BoardData
@@ -26,8 +27,8 @@ function ChangeObserver({ initialState }: Props) {
     listenChanges()
   }, [currentState, boardState])
 
-  const handleSaveChanges = () => {
-    // TODO: use server action to save changes
+  const handleSaveChanges = async () => {
+    await saveBoard(boardState.id, boardState)
     setCurrentState(boardState)
   }
 

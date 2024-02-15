@@ -7,14 +7,13 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Item } from "@prisma/client"
 import useBoardStore from "../../store/board-store"
-import { EventHandler, FormEvent, useState } from "react"
+import { FormEvent, useState } from "react"
 import { Textarea } from "@/components/ui/textarea"
+import { Column, Item } from "../types/board-data"
 
 interface Props {
   isOpen: boolean
@@ -32,12 +31,12 @@ function ItemDialog({ isOpen, itemData, handleClose }: Props) {
   const handleSaveItem = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const currentColumn = boardState.columns.find(
-      (col) => col.id === itemData.columnId
+      (col: Column) => col.id === itemData.columnId
     )
 
     if (!currentColumn) return
 
-    const newItems = currentColumn.items.map((item) => {
+    const newItems = currentColumn.items.map((item: Item) => {
       if (item.id === itemData.id) {
         return {
           ...item,
@@ -48,7 +47,7 @@ function ItemDialog({ isOpen, itemData, handleClose }: Props) {
       return item
     })
 
-    const resultCols = boardState.columns.map((col) => {
+    const resultCols = boardState.columns.map((col: Column) => {
       if (col.id === currentColumn.id) {
         return {
           ...col,

@@ -6,7 +6,6 @@ import ChangeObserver from "./_components/change-observer"
 
 async function Page({ params }: { params: { id: string } }) {
   const boardData = await getBoard(params.id)
-
   return (
     <div>
       <div className='bg-primary bg-opacity-10'>

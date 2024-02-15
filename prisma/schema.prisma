@@ -13,22 +13,5 @@ model Board {
   title       String
   description String?  @default("")
   createdAt   DateTime @default(now())
-  columns     Column[]
-}
-
-model Column {
-  id        String   @id @default(uuid()) @map("_id")
-  title     String
-  createdAt DateTime @default(now())
-  board     Board    @relation(fields: [boardId], references: [id])
-  boardId   String
-  items     Item[]
-}
-
-model Item {
-  id          String  @id @default(uuid()) @map("_id")
-  title       String
-  description String?
-  column      Column  @relation(fields: [columnId], references: [id])
-  columnId    String
+  columns     Json[]   @default([])
 }

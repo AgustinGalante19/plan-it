@@ -1,4 +1,4 @@
-import { Item } from "@prisma/client"
+import { Item } from "../types/board-data"
 
 export default function orderItems(
   items: Item[],

@@ -1,8 +1,8 @@
 import { Draggable } from "@hello-pangea/dnd"
-import { Item } from "@prisma/client"
 import ItemDialog from "./item-dialog"
 import { useState } from "react"
 import { Pencil, Trash } from "lucide-react"
+import { Item } from "../types/board-data"
 
 interface Props {
   item: Item

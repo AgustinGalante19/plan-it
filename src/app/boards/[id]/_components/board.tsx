@@ -4,10 +4,9 @@ import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd"
 import React, { useEffect, useState } from "react"
 import Column from "./column"
 import Item from "./item"
-import BoardData, { ColWithItems } from "../types/board-data"
+import BoardData, { Column as ColType } from "../types/board-data"
 import { Loader2, Plus } from "lucide-react"
 import orderBoard from "../utils/order-board"
-import { Column as ColType } from "@prisma/client"
 import ShortUniqueId from "short-unique-id"
 import useBoardStore from "../../store/board-store"
 
@@ -27,18 +26,20 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
     setBoardState(orderResult)
   }
 
-  const updateCols = (newCols: ColWithItems[]) =>
+  const updateCols = (newCols: ColType[]) =>
     setBoardState({
       ...boardState,
       columns: newCols,
     })
 
   const handleAddItem = (column: ColType) => {
-    const currentColumn = boardState.columns.find((e) => e.id === column.id)
+    const currentColumn = boardState.columns.find(
+      (e: ColType) => e.id === column.id
+    )
 
     if (!currentColumn) return
 
-    const updatedCols: ColWithItems[] = boardState.columns.map((col) => {
+    const updatedCols: ColType[] = boardState.columns.map((col: ColType) => {
       if (col.id === currentColumn.id) {
         return {
           ...currentColumn,
@@ -69,7 +70,6 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
         {
           title: "New column",
           id: randomUUID(),
-          boardId: boardState.id,
           items: [],
           createdAt: new Date(),
         },
@@ -78,7 +78,7 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      {boardState.columns.map((column) => (
+      {boardState.columns.map((column: ColType) => (
         <Droppable droppableId={column.id.toString()} key={column.id}>
           {(provided) => (
             <Column

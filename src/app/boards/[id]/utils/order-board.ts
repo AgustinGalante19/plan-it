@@ -1,6 +1,5 @@
 import { DropResult } from "@hello-pangea/dnd"
-import BoardData, { ColWithItems } from "../types/board-data"
-import { Column } from "../types/drag-list"
+import BoardData, { Column } from "../types/board-data"
 import orderItems from "./order-items"
 
 export default function orderBoard(
@@ -16,17 +15,17 @@ export default function orderBoard(
     return boardData
 
   const currentColumn = boardData.columns.find(
-    (c) => c.id.toString() === source.droppableId
+    (c: Column) => c.id.toString() === source.droppableId
   )
 
   if (!currentColumn) return boardData
 
-  const updatedColumn: ColWithItems = {
+  const updatedColumn: Column = {
     ...currentColumn,
     items: orderItems(currentColumn.items, draggableId, destination.index),
   }
 
-  const updatedResult = boardData.columns.map((e) => {
+  const updatedResult = boardData.columns.map((e: Column) => {
     if (e.id === source.droppableId) {
       return updatedColumn
     }

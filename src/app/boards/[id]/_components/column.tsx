@@ -1,17 +1,16 @@
 "use client"
 
 import { DroppableProvided } from "@hello-pangea/dnd"
-import { Column } from "@prisma/client"
-import { ColWithItems } from "../types/board-data"
+import { Column as ColType } from "../types/board-data"
 import { Check, Pencil, Trash } from "lucide-react"
 import { useState } from "react"
 
 interface Props {
   provided: DroppableProvided
   children: React.ReactNode
-  column: Column
-  columns: ColWithItems[]
-  updateCols: (newCols: ColWithItems[]) => void
+  column: ColType
+  columns: ColType[]
+  updateCols: (newCols: ColType[]) => void
 }
 
 function Column({ children, provided, column, columns, updateCols }: Props) {
