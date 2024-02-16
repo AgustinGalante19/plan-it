@@ -27,25 +27,31 @@ function ThemeSwitcher() {
   }, [])
 
   return (
-    <motion.button
-      className='absoulte z-10 p-3 rounded-full flex justify-center items-center w-12 bg-primary bottom-0 right-0 m-2'
-      type='button'
-      whileTap={{
-        rotateY: 50,
-      }}
-      onClick={() => {
-        document.documentElement.classList.toggle("dark")
-        if (currentTheme === "dark") {
-          setCurrentTheme("light")
-          globalThis.localStorage.setItem("theme", "light")
-        } else {
-          setCurrentTheme("dark")
-          globalThis.localStorage.setItem("theme", "dark")
-        }
-      }}
-    >
-      {currentTheme === "dark" ? <Moon color='white' /> : <Sun color='white' />}
-    </motion.button>
+    <div className='absolute h-screen flex items-end'>
+      <motion.button
+        className='p-3 rounded-full flex justify-center items-center w-12 bg-primary m-2'
+        type='button'
+        whileTap={{
+          rotateY: 50,
+        }}
+        onClick={() => {
+          document.documentElement.classList.toggle("dark")
+          if (currentTheme === "dark") {
+            setCurrentTheme("light")
+            globalThis.localStorage.setItem("theme", "light")
+          } else {
+            setCurrentTheme("dark")
+            globalThis.localStorage.setItem("theme", "dark")
+          }
+        }}
+      >
+        {currentTheme === "dark" ? (
+          <Moon color='white' />
+        ) : (
+          <Sun color='white' />
+        )}
+      </motion.button>
+    </div>
   )
 }
 

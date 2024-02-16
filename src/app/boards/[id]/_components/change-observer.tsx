@@ -47,11 +47,9 @@ function ChangeObserver({ initialState }: Props) {
               type: "spring",
             },
           }}
-          className={
-            "w-full absolute flex-col items-center h-auto bg-green-500 flex"
-          }
+          className={"w-full relative flex-col items-center h-full flex"}
         >
-          <div className='absolute flex w-[90%] self-center justify-between p-4 rounded-lg mt-4 bg-primary bg-opacity-50 items-center'>
+          <div className='flex w-[90%] self-center justify-between p-2 rounded-lg bg-primary bg-opacity-50 items-center'>
             <span className='font-semibold'>
               ❓ Changes have been detected, do yo want to save it?
             </span>
