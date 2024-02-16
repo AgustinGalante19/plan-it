@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { EventHandler, FormEvent, useState } from "react"
 import {
   Dialog,
   DialogContent,
@@ -16,6 +16,17 @@ import createBoard from "../actions/create-board"
 
 function CreateBoard() {
   const [isOpen, setIsOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleCreateSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsLoading(true)
+    const formData = new FormData(e.currentTarget)
+    createBoard(formData).finally(() => {
+      setIsLoading(false)
+      setIsOpen(false)
+    })
+  }
 
   return (
     <>
@@ -36,12 +47,7 @@ function CreateBoard() {
               it.
             </DialogDescription>
           </DialogHeader>
-          <form
-            className='grid gap-4 py-4'
-            action={async (formData) => {
-              createBoard(formData).finally(() => setIsOpen(false))
-            }}
-          >
+          <form className='grid gap-4 py-4' onSubmit={handleCreateSubmit}>
             <div>
               <Label htmlFor='name' className='text-right'>
                 Title
@@ -59,7 +65,9 @@ function CreateBoard() {
               />
             </div>
             <div className='flex justify-end'>
-              <Button type='submit'>Create</Button>
+              <Button type='submit' isLoading={isLoading}>
+                Create
+              </Button>
             </div>
           </form>
         </DialogContent>

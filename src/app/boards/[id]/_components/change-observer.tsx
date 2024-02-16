@@ -14,6 +14,7 @@ interface Props {
 function ChangeObserver({ initialState }: Props) {
   const [hasChanges, setHasChanges] = useState(false)
   const [currentState, setCurrentState] = useState(initialState)
+  const [isLoading, setIsLoading] = useState(false)
   const { boardState } = useBoardStore()
 
   useEffect(() => {
@@ -28,7 +29,9 @@ function ChangeObserver({ initialState }: Props) {
   }, [currentState, boardState])
 
   const handleSaveChanges = async () => {
+    setIsLoading(true)
     await saveBoard(boardState.id, boardState)
+    setIsLoading(false)
     setCurrentState(boardState)
   }
 
@@ -57,6 +60,7 @@ function ChangeObserver({ initialState }: Props) {
               type='button'
               title='Save changes'
               onClick={handleSaveChanges}
+              isLoading={isLoading}
             >
               Save
             </Button>
