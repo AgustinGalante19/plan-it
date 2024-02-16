@@ -14,11 +14,52 @@ export default function orderBoard(
   )
     return boardData
 
-  const currentColumn = boardData.columns.find(
+  let currentColumn: Column = boardData.columns.find(
     (c: Column) => c.id.toString() === source.droppableId
   )
-
   if (!currentColumn) return boardData
+
+  const currentItem = currentColumn.items.find(
+    (item) => item.id === draggableId
+  )
+
+  if (!currentItem) return boardData
+
+  let updatedDestinationColumn: Column | null = null
+
+  if (currentItem.columnId !== destination.droppableId) {
+    currentColumn.items = currentColumn.items.filter(
+      (item) => item.id !== draggableId
+    )
+
+    const destinationColumn = boardData.columns.find(
+      (col: Column) => col.id === destination.droppableId
+    )
+    currentItem.columnId = destination.droppableId
+    updatedDestinationColumn = {
+      ...destinationColumn,
+      items: orderItems(
+        [...destinationColumn.items, currentItem],
+        draggableId,
+        destination.index
+      ),
+    }
+
+    const updatedResult = boardData.columns.map((e: Column) => {
+      if (e.id === destination.droppableId) {
+        return updatedDestinationColumn
+      }
+      if (e.id === currentColumn.id) {
+        return currentColumn
+      }
+      return e
+    })
+
+    return {
+      ...boardData,
+      columns: updatedResult,
+    }
+  }
 
   const updatedColumn: Column = {
     ...currentColumn,
