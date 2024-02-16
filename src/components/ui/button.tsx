@@ -3,14 +3,15 @@ import { VariantProps, cva } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 import { Loader2 } from "lucide-react"
 
-const buttonVariants = cva(
-  "rounded flex items-center justify-center transition-colors hover:bg-opacity-90 disabled:bg-opacity-70",
+export const buttonVariants = cva(
+  "rounded flex items-center justify-center transition-colors hover:bg-opacity-80 disabled:bg-opacity-70",
   {
     variants: {
       variant: {
         default: "bg-primary text-white",
         outline: "bg-secondary text-primary",
         rounded: "rounded-full bg-primary text-white",
+        danger: "bg-red-600 text-white",
       },
       size: {
         small: "text-sm px-2 py-1",
