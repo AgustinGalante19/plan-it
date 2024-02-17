@@ -5,6 +5,7 @@ import { Column as ColType } from "../types/board-data"
 import { Check } from "lucide-react"
 import { useState } from "react"
 import ColOptions from "./col-options"
+import { motion } from "framer-motion"
 
 interface Props {
   provided: DroppableProvided
@@ -42,17 +43,19 @@ function Column({ children, provided, column, columns, updateCols }: Props) {
       <div className='flex justify-between items-center'>
         {isEditing ? (
           <>
-            <input
-              className='w-full border bg-secondary border-primary  text-black dark:border-secondary rounded-md h-9 dark:bg-primary dark:text-white font-bold text-xl px-1'
+            <motion.input
+              initial={{
+                scale: 0.4,
+              }}
+              animate={{
+                scale: 1,
+              }}
+              className='w-full bg-primary/80  dark:bg-secondary text-white dark:text-black rounded pl-2 h-9  font-bold text-xl'
               value={colTitle}
               onChange={(e) => setColTitle(e.target.value)}
             />
-            <button className='mx-1'>
-              <Check
-                onClick={handleUpdateTitle}
-                size={20}
-                color='rgb(22 163 74)'
-              />
+            <button className='mx-1 bg-green-500 text-white dark:bg-green-600 p-1 rounded'>
+              <Check onClick={handleUpdateTitle} size={18} />
             </button>
           </>
         ) : (
