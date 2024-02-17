@@ -11,7 +11,7 @@ async function Page({ params }: { params: { id: string } }) {
     <div>
       <div className='bg-primary bg-opacity-10'>
         <div className=' flex flex-col p-4'>
-          <div className='flex items-center justify-between'>
+          <div className='flex items-center justify-between mb-1'>
             <Link
               className='flex items-center gap-1 hover:bg-secondary dark:hover:bg-opacity-10 py-1 px-2 rounded-md transition-colors'
               href='/boards'
@@ -21,10 +21,10 @@ async function Page({ params }: { params: { id: string } }) {
             </Link>
             <RemoveBoard boardId={params.id} boardTitle={boardData.title} />
           </div>
-          <div className='px-4'>
-            <p className='text-sm'>{boardData.description}</p>
+          <div className='px-2'>
+            <span className='text-sm'>{boardData.description}</span>
           </div>
-          <div className='px-4'>
+          <div className='px-2'>
             <span className='text-xs text-neutral-600 dark:text-neutral-400'>
               {boardData.createdAt.toDateString()}
             </span>
