@@ -1,9 +1,12 @@
+"use client"
+
 import { Draggable } from "@hello-pangea/dnd"
 import ItemDialog from "./item-dialog"
 import { useState } from "react"
-import { Pencil, Trash } from "lucide-react"
+import { Pencil } from "lucide-react"
 import { Column, Item } from "../types/board-data"
 import useBoardStore from "../../store/board-store"
+import { motion } from "framer-motion"
 
 interface Props {
   item: Item
@@ -44,20 +47,25 @@ function Item({ item, index, currentColumn }: Props) {
             {...provided.dragHandleProps}
             ref={provided.innerRef}
           >
-            <div className='p-1 flex justify-between'>
+            <motion.div
+              className='p-1 flex justify-between'
+              initial={{
+                scale: 0.4,
+              }}
+              animate={{
+                scale: 1,
+              }}
+            >
               <h5 className='text-xl font-semibold'>{item.title}</h5>
               <div className='flex items-center gap-2'>
-                <button onClick={() => setIsEditOpen(true)}>
-                  <Pencil size={18} />
-                </button>
                 <button
-                  className='py-1 px-1.5 rounded-lg'
-                  onClick={handleRemoveItem}
+                  className='p-1 flex items-center justify-center rounded-md hover:bg-neutral-900 hover:bg-opacity-25 transition-colors'
+                  onClick={() => setIsEditOpen(true)}
                 >
-                  <Trash size={18} color='rgb(239 68 68)' />
+                  <Pencil size={16} />
                 </button>
               </div>
-            </div>
+            </motion.div>
             <div className='p-1'>
               <p>{item.description}</p>
             </div>
@@ -69,6 +77,7 @@ function Item({ item, index, currentColumn }: Props) {
         itemData={item}
         handleClose={handleClose}
         currentColumn={currentColumn}
+        handleRemoveItem={handleRemoveItem}
       />
     </>
   )

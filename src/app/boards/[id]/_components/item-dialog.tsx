@@ -14,15 +14,24 @@ import useBoardStore from "../../store/board-store"
 import { FormEvent, useState } from "react"
 import { Textarea } from "@/components/ui/textarea"
 import { Column, Item } from "../types/board-data"
+import { Trash } from "lucide-react"
+import { ButtonTooltip } from "@/components/ui/tooltip"
 
 interface Props {
   isOpen: boolean
   itemData: Item
   handleClose: () => void
   currentColumn: Column
+  handleRemoveItem: () => void
 }
 
-function ItemDialog({ isOpen, itemData, handleClose, currentColumn }: Props) {
+function ItemDialog({
+  isOpen,
+  itemData,
+  handleClose,
+  currentColumn,
+  handleRemoveItem,
+}: Props) {
   const { boardState, setBoardState } = useBoardStore()
   const [formData, setFormData] = useState({
     title: itemData.title,
@@ -92,7 +101,17 @@ function ItemDialog({ isOpen, itemData, handleClose, currentColumn }: Props) {
                 placeholder='description'
               />
             </div>
-            <div className='flex justify-end mt-2'>
+            <div className='flex justify-between mt-2'>
+              <ButtonTooltip label='Remove Item'>
+                <Button
+                  variant='danger'
+                  className='p-2'
+                  type='button'
+                  onClick={handleRemoveItem}
+                >
+                  <Trash size={16} />
+                </Button>
+              </ButtonTooltip>
               <Button type='button' onClick={handleSaveItem}>
                 Save
               </Button>
