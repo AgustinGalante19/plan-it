@@ -2,7 +2,7 @@
 
 import { DroppableProvided } from "@hello-pangea/dnd"
 import { Column as ColType } from "../types/board-data"
-import { Check, Pencil, Trash } from "lucide-react"
+import { Check } from "lucide-react"
 import { useState } from "react"
 import ColOptions from "./col-options"
 
