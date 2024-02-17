@@ -15,7 +15,13 @@ import {
 import removeBoard from "../actions/remove-board"
 import { useRouter } from "next/navigation"
 
-function RemoveBoard({ boardId }: { boardId: string }) {
+function RemoveBoard({
+  boardId,
+  boardTitle,
+}: {
+  boardId: string
+  boardTitle: string
+}) {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const { push } = useRouter()
@@ -37,10 +43,9 @@ function RemoveBoard({ boardId }: { boardId: string }) {
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogTitle>Remove {boardTitle}</DialogTitle>
             <DialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+              Are you sure? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

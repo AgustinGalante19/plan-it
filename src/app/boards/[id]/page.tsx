@@ -19,7 +19,7 @@ async function Page({ params }: { params: { id: string } }) {
               <ArrowLeft size={18} />
               <h2 className='text-xl font-semibold'>{boardData.title}</h2>
             </Link>
-            <RemoveBoard boardId={params.id} />
+            <RemoveBoard boardId={params.id} boardTitle={boardData.title} />
           </div>
           <div className='px-4'>
             <p className='text-sm'>{boardData.description}</p>
