@@ -4,6 +4,7 @@ import { DroppableProvided } from "@hello-pangea/dnd"
 import { Column as ColType } from "../types/board-data"
 import { Check, Pencil, Trash } from "lucide-react"
 import { useState } from "react"
+import ColOptions from "./col-options"
 
 interface Props {
   provided: DroppableProvided
@@ -38,35 +39,31 @@ function Column({ children, provided, column, columns, updateCols }: Props) {
 
   return (
     <div className='p-4 bg-secondary dark:bg-primary rounded-md min-w-[24rem] space-y-2 flex-col overflow-y-auto'>
-      <div className='flex'>
+      <div className='flex justify-between items-center'>
         {isEditing ? (
-          <input
-            className='w-full border bg-secondary border-primary  text-black dark:border-secondary rounded-md h-9 dark:bg-primary dark:text-white font-bold text-xl px-1'
-            value={colTitle}
-            onChange={(e) => setColTitle(e.target.value)}
-          />
+          <>
+            <input
+              className='w-full border bg-secondary border-primary  text-black dark:border-secondary rounded-md h-9 dark:bg-primary dark:text-white font-bold text-xl px-1'
+              value={colTitle}
+              onChange={(e) => setColTitle(e.target.value)}
+            />
+            <button className='mx-1'>
+              <Check
+                onClick={handleUpdateTitle}
+                size={20}
+                color='rgb(22 163 74)'
+              />
+            </button>
+          </>
         ) : (
           <h4 className='dark:text-white font-bold text-xl w-full'>
             {column.title}
           </h4>
         )}
-        <div className='space-x-2 flex ml-2 items-center'>
-          {!isEditing ? (
-            <button
-              className='py-1 px-1.5 rounded-lg'
-              onClick={() => setIsEditing(true)}
-            >
-              <Pencil size={22} />
-            </button>
-          ) : (
-            <button>
-              <Check onClick={handleUpdateTitle} color='rgb(22 163 74)' />
-            </button>
-          )}
-          <button className='py-1 px-1.5 rounded-lg' onClick={handleRemoveCol}>
-            <Trash color='rgb(239 68 68)' />
-          </button>
-        </div>
+        <ColOptions
+          handleClickEdit={() => setIsEditing(true)}
+          handleClickRemove={handleRemoveCol}
+        />
       </div>
       <div ref={provided.innerRef} {...provided.droppableProps}>
         {children}
