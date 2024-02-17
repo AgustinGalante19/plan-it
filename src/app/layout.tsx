@@ -4,6 +4,8 @@ import "./globals.css"
 import Navigation from "@/components/navigation"
 import ThemeSwitcher from "@/components/theme-switcher"
 import Providers from "@/components/providers"
+import { Toaster } from "@/components/ui/toaster"
+
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
@@ -23,6 +25,7 @@ export default function RootLayout({
           <div className='flex flex-col min-h-screen dark:bg-dark-blue dark:text-white'>
             <div className='flex-1'>
               <Navigation />
+              <Toaster />
               {children}
             </div>
             <ThemeSwitcher />
