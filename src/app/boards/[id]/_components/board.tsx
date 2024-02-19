@@ -1,11 +1,16 @@
 "use client"
 
-import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd"
-import React, { useEffect, useState } from "react"
+import {
+  DragDropContext,
+  Draggable,
+  DropResult,
+  Droppable,
+} from "@hello-pangea/dnd"
+import React, { useEffect } from "react"
 import Column from "./column"
 import Item from "./item"
 import BoardData, { Column as ColType } from "../types/board-data"
-import { Loader2, Plus } from "lucide-react"
+import { Plus } from "lucide-react"
 import orderBoard from "../utils/order-board"
 import ShortUniqueId from "short-unique-id"
 import useBoardStore from "../../store/board-store"
@@ -76,36 +81,57 @@ function Board({ initialBoardData }: { initialBoardData: BoardData }) {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      {boardState.columns.map((column: ColType) => (
-        <Droppable droppableId={column.id.toString()} key={column.id}>
-          {(provided) => (
-            <Column
-              provided={provided}
-              column={column}
-              updateCols={updateCols}
-              columns={boardState.columns}
-            >
-              {column.items.map((item, index) => (
-                <Item
-                  currentColumn={column}
-                  index={index}
-                  item={item}
-                  key={item.id}
-                />
-              ))}
-              <button
-                className='dark:bg-secondary/20 bg-primary/60 text-white rounded-md flex justify-center items-center p-1 w-full'
-                type='button'
-                onClick={() => handleAddItem(column)}
-              >
-                <Plus size={18} />
-                <span>Add item</span>
-              </button>
-              {provided.placeholder}
-            </Column>
-          )}
-        </Droppable>
-      ))}
+      <Droppable droppableId='allColumn' direction='horizontal' type='column'>
+        {(provided) => (
+          <div
+            className='flex gap-2'
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+            {boardState.columns.map((column: ColType, index: number) => (
+              <Draggable key={column.id} index={index} draggableId={column.id}>
+                {(provided) => (
+                  <div
+                    {...provided.draggableProps}
+                    ref={provided.innerRef}
+                    {...provided.dragHandleProps}
+                  >
+                    <Droppable droppableId={column.id.toString()} type='item'>
+                      {(provided) => (
+                        <Column
+                          provided={provided}
+                          column={column}
+                          updateCols={updateCols}
+                          columns={boardState.columns}
+                        >
+                          {column.items.map((item, index) => (
+                            <Item
+                              currentColumn={column}
+                              index={index}
+                              item={item}
+                              key={item.id}
+                            />
+                          ))}
+                          <button
+                            className='dark:bg-secondary/20 bg-primary/60 text-white rounded-md flex justify-center items-center p-1 w-full'
+                            type='button'
+                            onClick={() => handleAddItem(column)}
+                          >
+                            <Plus size={18} />
+                            <span>Add item</span>
+                          </button>
+                          {provided.placeholder}
+                        </Column>
+                      )}
+                    </Droppable>
+                  </div>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
       <button
         className='bg-primary/60 text-white font-semibold rounded-md min-w-[24rem] h-10 flex px-4 items-center justify-center disabled:bg-primary/20'
         type='button'
