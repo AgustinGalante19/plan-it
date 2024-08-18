@@ -1,5 +1,5 @@
 "use client"
-import { useRouter } from "next/navigation"
+import Link from "next/link"
 import React, { useRef, useState } from "react"
 
 const BoardItem = ({
@@ -15,8 +15,6 @@ const BoardItem = ({
   const [isFocused, setIsFocused] = useState(false)
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [opacity, setOpacity] = useState(0)
-
-  const { push } = useRouter()
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!divRef.current || isFocused) return
@@ -46,9 +44,10 @@ const BoardItem = ({
   }
 
   return (
-    <button
-      onClick={() => push(`boards/${id}`)}
+    <Link
+      href={`/boards/${id}`}
       className='hover:drop-shadow-[0_25px_25px_rgba(152,124,249,0.2)] rounded-md transition-all hover:scale-105'
+      style={{ wordBreak: "break-word" }}
     >
       <div
         ref={divRef}
@@ -58,6 +57,7 @@ const BoardItem = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className='relative flex h-32 w-96 overflow-hidden rounded-md bg-gradient-to-r dark:from-primary/60 dark:to-primary/50 from-primary/90 to-primary/70 p-4 text-white'
+        style={{ textWrap: "wrap" }}
       >
         <div
           className='pointer-events-none absolute -inset-px opacity-0 transition duration-300'
@@ -68,10 +68,10 @@ const BoardItem = ({
         />
         <div className='flex flex-col items-start'>
           <h5 className='text-lg font-semibold'>{title}</h5>
-          <p>{description}</p>
+          <p className='text-start'>{description}</p>
         </div>
       </div>
-    </button>
+    </Link>
   )
 }
 
