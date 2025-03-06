@@ -1,31 +1,31 @@
-"use client"
+'use client';
 
-import Button from "./ui/button"
-import { LogIn } from "lucide-react"
-import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
-import { cn } from "@/lib/utils"
-import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { UserButton, useAuth } from "@clerk/nextjs"
+import Button from './ui/button';
+import { LogIn } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { UserButton, useAuth } from '@clerk/nextjs';
 
 const tabs = [
-  { label: "Home", id: 0, path: "/" },
-  { label: "Boards", id: 1, path: "/boards" },
-]
+  { label: 'Home', id: 0, path: '/' },
+  { label: 'Boards', id: 1, path: '/boards' },
+];
 
 function Navigation() {
-  const [activeTab, setActiveTab] = useState(tabs[0].id)
-  const { push } = useRouter()
+  const [activeTab, setActiveTab] = useState(tabs[0].id);
+  const { push } = useRouter();
 
-  const { isSignedIn } = useAuth()
-  const pathname = usePathname()
+  const { isSignedIn } = useAuth();
+  const pathname = usePathname();
 
   useEffect(() => {
     tabs.forEach(({ path, id }) => {
-      if (pathname.includes(path)) setActiveTab(id)
-    })
-  }, [pathname])
+      if (pathname.includes(path)) setActiveTab(id);
+    });
+  }, [pathname]);
 
   return (
     <header className='flex container mx-auto max-w-5xl justify-between py-6 items-center'>
@@ -41,12 +41,12 @@ function Navigation() {
           <button
             key={tab.id}
             onClick={() => {
-              setActiveTab(tab.id)
-              push(tab.path)
+              setActiveTab(tab.id);
+              push(tab.path);
             }}
             className={cn(
-              activeTab === tab.id ? "text-white" : "text-primary",
-              "relative rounded-full px-4 py-2 font-bold outline-2 outline-sky-400 focus-visible:outline transition-colors"
+              activeTab === tab.id ? 'text-white' : 'text-primary',
+              'relative rounded-full px-4 py-2 font-bold outline-2 outline-sky-400 focus-visible:outline transition-colors'
             )}
           >
             {activeTab === tab.id && (
@@ -62,16 +62,16 @@ function Navigation() {
       </div>
       <div>
         {!isSignedIn ? (
-          <Button onClick={() => push("/sign-in")}>
-            Login
+          <Button onClick={() => push('/sign-in')}>
             <LogIn size={16} className='ml-2' />
+            Login
           </Button>
         ) : (
           <UserButton afterSignOutUrl='/' />
         )}
       </div>
     </header>
-  )
+  );
 }
 
-export default Navigation
+export default Navigation;

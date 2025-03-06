@@ -1,12 +1,12 @@
-import { ArrowLeft } from "lucide-react"
-import Board from "./_components/board"
-import getBoard from "./actions/get-board"
-import Link from "next/link"
-import ChangeObserver from "./_components/change-observer"
-import RemoveBoard from "./_components/remove-board"
+import { ArrowLeft } from 'lucide-react';
+import Board from './_components/board';
+import getBoard from './actions/get-board';
+import Link from 'next/link';
+import ChangeObserver from './_components/change-observer';
+import RemoveBoard from './_components/remove-board';
 
 async function Page({ params }: { params: { id: string } }) {
-  const boardData = await getBoard(params.id)
+  const boardData = await getBoard(params.id);
   return (
     <div>
       <div className='bg-primary bg-opacity-10'>
@@ -26,7 +26,7 @@ async function Page({ params }: { params: { id: string } }) {
           </div>
           <div className='px-2'>
             <span className='text-xs text-neutral-600 dark:text-neutral-400'>
-              {boardData.createdAt.toDateString()}
+              created at: {boardData.createdAt.toDateString()}
             </span>
           </div>
         </div>
@@ -36,7 +36,7 @@ async function Page({ params }: { params: { id: string } }) {
       </div>
       <ChangeObserver initialState={boardData} />
     </div>
-  )
+  );
 }
 
-export default Page
+export default Page;
